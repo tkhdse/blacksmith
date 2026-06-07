@@ -2,6 +2,8 @@ import blacksmith_
 import torch
 import torch.nn as nn
 
+from blacksmith.ir import parse_fx
+
 # blacksmith API
 
 def compile(model: nn.Module):
@@ -11,7 +13,7 @@ def compile(model: nn.Module):
     ret = blacksmith_.add(1,2)
     print(ret) # 3
 
-    print(fx_out)
+    parse_fx(fx_out)
     # serialized_nodes = 
     # fx_graph = blacksmith.compile(serialized_nodes)
     # print(fx_graph)
