@@ -1,3 +1,3 @@
-torch
-numpy
-pybind11
+torch==2.8.0
+numpy==2.0.2
+pybind11==3.0.4
