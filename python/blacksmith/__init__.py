@@ -1,8 +1,6 @@
-import blacksmith 
+import blacksmith_
 import torch
 import torch.nn as nn
-
-import example
 
 # blacksmith API
 
@@ -10,7 +8,7 @@ def compile(model: nn.Module):
     module = torch.export.export(model(), (torch.randn(100, 8), ))
     fx_out = module.run_decompositions().graph
 
-    ret = example.add(1,2)
+    ret = blacksmith_.add(1,2)
     print(ret) # 3
 
     print(fx_out)
