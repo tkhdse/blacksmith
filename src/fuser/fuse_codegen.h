@@ -1,3 +1,3 @@
 class FuseCodegenPass {
     void run();
-}
+};

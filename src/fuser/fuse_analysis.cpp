@@ -1,5 +1,5 @@
-#include "fuse_analysis.cpp"
+#include "fuse_analysis.h"
 
-FuseAnalysisPass::run() {
+void FuseAnalysisPass::run() {
     return;
 }

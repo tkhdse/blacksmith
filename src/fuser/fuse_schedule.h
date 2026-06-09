@@ -1,3 +1,3 @@
 class FuseSchedulerPass {
     void run();
-}
+};
