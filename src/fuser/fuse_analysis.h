@@ -1,0 +1,3 @@
+class FuseAnalysisPass {
+    void run();
+}

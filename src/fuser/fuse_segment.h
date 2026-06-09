@@ -1,0 +1,3 @@
+class FuseSegmentPass {
+    void run();
+}
