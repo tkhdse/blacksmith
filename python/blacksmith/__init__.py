@@ -10,6 +10,7 @@ from blacksmith.ir import parse_fx
 def compile(model: nn.Module):
     module = torch.export.export(model(), (torch.randn(100, 8), ))
     fx_out = module.run_decompositions().graph
+    print(fx_out)
 
     parsed = parse_fx(fx_out)
     ret = blacksmith_.lower_fx(parsed)

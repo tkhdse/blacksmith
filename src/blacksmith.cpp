@@ -7,32 +7,27 @@
 #include <variant>
 #include <iostream>
 
+#include "utils/fx_utils.h"
+#include "utils/node_def.h"
+
+
 namespace py = pybind11;
 using namespace std;
-
-class FXNode {
-public:
-    string name;
-    string op_name;
-    string target;
-    vector<string> args;
-
-    vector<int> shape;
-    string dtype;
-    int index = -1;
-};
 
 
 
 int lower_fx(const py::list& fx_graph) {
     cout << "entered" << endl;
 
-    vector<FXNode*> fx_nodes;
+    vector<FXNode> fx_nodes;
 
     for (auto& item : fx_graph) {
-        FXNode* fx_node = item.cast<FXNode*>();
+        FXNode fx_node = item.cast<FXNode>();
         fx_nodes.push_back(fx_node);
     }
+
+    print_nodes(fx_nodes);
+
     // vector<FXNode*> nodes = fx_graph.cast<vector<FXNode*>>();
     return 0;
 }
@@ -50,5 +45,5 @@ PYBIND11_MODULE(blacksmith_, m, py::mod_gil_not_used()) {
         .def_readwrite("dtype", &FXNode::dtype)
         .def_readwrite("index", &FXNode::index);
 
-    m.def("lower_fx", &lower_fx, "A function that adds two numbers");
+    m.def("lower_fx", &lower_fx, "Performs compilation steps for fusion and lowering to Metal");
 }
