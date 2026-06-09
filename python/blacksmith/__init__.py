@@ -12,7 +12,5 @@ def compile(model: nn.Module):
     fx_out = module.run_decompositions().graph
 
     parsed = parse_fx(fx_out)
-    print(parsed)
-    
-    ret = blacksmith_.lower_fx(1,2)
+    ret = blacksmith_.lower_fx(parsed)
     print(ret)
