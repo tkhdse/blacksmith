@@ -9,6 +9,7 @@
 
 #include "utils/fx_utils.h"
 #include "utils/node_def.h"
+#include "utils/op_class.h"
 
 
 namespace py = pybind11;
@@ -28,7 +29,6 @@ int lower_fx(const py::list& fx_graph) {
 
     print_nodes(fx_nodes);
 
-    // vector<FXNode*> nodes = fx_graph.cast<vector<FXNode*>>();
     return 0;
 }
 
