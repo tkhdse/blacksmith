@@ -3,6 +3,9 @@ CXX			?= c++
 SRC_DIR		:= src
 FUSE_DIR	:= $(SRC_DIR)/fuser
 UTILS_DIR 	:= $(SRC_DIR)/utils
+IR_DIR 		:= $(SRC_DIR)/ir
+
+
 OUT_DIR		:= python
 BUILD_DIR	:= build
 
@@ -14,8 +17,9 @@ TARGET		:= $(OUT_DIR)/$(MODULE)$(EXT_SUFFIX)
 MAIN_SRC	:= $(SRC_DIR)/blacksmith.cpp
 FUSE_SRCS	:= $(wildcard $(FUSE_DIR)/*.cpp)
 UTILS_SRCS 	:= $(wildcard $(UTILS_DIR)/*.cpp)
+IR_SRCS 	:= $(wildcard $(IR_DIR)/*.cpp)
 
-SRCS		:= $(MAIN_SRC) $(FUSE_SRCS) $(UTILS_SRCS)
+SRCS		:= $(MAIN_SRC) $(FUSE_SRCS) $(UTILS_SRCS) $(IR_SRCS)
 OBJS 		:= $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRCS))
 
 CXXFLAGS	:= -O3 -Wall -std=c++11 -fPIC 

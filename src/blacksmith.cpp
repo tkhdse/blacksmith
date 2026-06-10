@@ -7,9 +7,11 @@
 #include <variant>
 #include <iostream>
 
+#include "ir/ir.h"
 #include "utils/fx_utils.h"
 #include "utils/node_def.h"
-#include "utils/op_class.h"
+#include "utils/op_def.h"
+// #include "utils/op_class.h"
 
 
 namespace py = pybind11;
@@ -28,6 +30,13 @@ int lower_fx(const py::list& fx_graph) {
     }
 
     print_nodes(fx_nodes);
+
+    FusionGraph* fusionGraph = buildFCGraph(fx_nodes);
+    
+    for (auto& fcop : fusionGraph->getNodes()) {
+        fcop->printInfo();
+    }
+
 
     return 0;
 }
