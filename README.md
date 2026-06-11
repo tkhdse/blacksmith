@@ -25,4 +25,7 @@ python3 python/main.py
 ## Implementation
 Blacksmith leverages PyTorch's TorchDynamo to generate an FX Graph (compute graph) for a given model definition. Blacksmith lowers this high-level compute graph to it's own IR containing a `FusionGraph` and `FCNOps` ("Fusion-candidate" ops). 
 
+FX Graph for the sample model defined in `python/main.py`:
+![sample dag](docs/sample_DAG.jpg)
+
 TBA
