@@ -15,6 +15,12 @@ public:
         this->nodes = {};
     }
 
+    ~FusionGraph() {
+        for (auto& node : this->nodes) {
+            delete node;
+        }
+    }
+
     vector<FCOp*> getNodes() const {
         return this->nodes;
     }

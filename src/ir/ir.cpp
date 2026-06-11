@@ -20,11 +20,10 @@ FusionGraph* buildFCGraph(vector<FXNode> fx_nodes) {
 
 // change function to accept an Enum/type of its own for easier comparison
 // .compare is too cumbersome
-// FCOp* getFCNodeFromTarget(string& target) {
-//     if (target.compare("add")) {
+FCOp* getFCNodeFromTarget(string& target) {
+    if (target.compare("add")) {
+        return new FCAddOp();
+    }
 
-//         return &FCAddOp();
-//     }
-
-//     return &FCAddOp();
-// }
+    return new FCAddOp();
+}
