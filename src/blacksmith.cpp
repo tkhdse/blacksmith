@@ -9,8 +9,8 @@
 
 #include "ir/ir.h"
 #include "utils/fx_utils.h"
-#include "utils/node_def.h"
-#include "utils/op_def.h"
+#include "ir/node_def.h"
+#include "ir/op_def.h"
 // #include "utils/op_class.h"
 
 

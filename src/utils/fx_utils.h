@@ -1,3 +1,3 @@
-#include "node_def.h"
+#include "../ir/node_def.h"
 
 void print_nodes(vector<FXNode>& nodes);

@@ -2,8 +2,8 @@
 #include <vector>
 #include <string>
 
-#include "../utils/node_def.h"
-#include "../utils/op_def.h"
+#include "../ir/node_def.h"
+#include "../ir/op_def.h"
 
 using namespace std;
 
