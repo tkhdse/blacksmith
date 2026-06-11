@@ -11,11 +11,15 @@ using namespace std;
 class FusionGraph {
 
 public:
+    FusionGraph() {
+        this->nodes = {};
+    }
+
     vector<FCOp*> getNodes() const {
         return this->nodes;
     }
 
-    void insertNode(const FCOp* op) {
+    void insertNode(FCOp* op) {
         this->nodes.push_back(op);
     }
 

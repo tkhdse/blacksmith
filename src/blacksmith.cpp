@@ -37,7 +37,7 @@ int lower_fx(const py::list& fx_graph) {
         fcop->printInfo();
     }
 
-
+    delete fusionGraph;
     return 0;
 }
 

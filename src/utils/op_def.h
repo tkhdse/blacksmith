@@ -64,21 +64,19 @@ private:
 };
 
 
-FCOp::~FCOp() = default;
-
-class FCAddOp : FCOp {
+class FCAddOp : public FCOp {
 public:
     FCAddOp() : FCOp(opInjective) {}
 };
 
 
-class FCSumOp : FCOp {
+class FCSumOp : public FCOp {
 public:
     FCSumOp() : FCOp(opReduction) {}
 };
 
 
-class FCReLUOp : FCOp {
+class FCReLUOp : public FCOp {
 public:
     FCReLUOp() : FCOp(opInjective) {}
 };

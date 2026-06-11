@@ -1,8 +1,10 @@
 #include "ir.h"
+#include <memory>
+
 
 FusionGraph* buildFCGraph(vector<FXNode> fx_nodes) {
 
-    FusionGraph* fusionGraph;
+    FusionGraph* fusionGraph = new FusionGraph();
 
     for (auto& node : fx_nodes) {
         // name -> FCNode
