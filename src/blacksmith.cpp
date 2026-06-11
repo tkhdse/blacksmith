@@ -27,7 +27,7 @@ int lower_fx(const py::list& fx_graph) {
         fx_nodes.push_back(fx_node);
     }
 
-    // print_nodes(fx_nodes);
+    print_nodes(fx_nodes);
 
     FusionGraph* fusionGraph = buildFCGraph(fx_nodes);
     
@@ -44,13 +44,13 @@ PYBIND11_MODULE(blacksmith_, m, py::mod_gil_not_used()) {
 
     py::class_<FXNode>(m, "FXNode")
         .def(py::init<>())
-        .def_readwrite("name", &FXNode::name)
-        .def_readwrite("op_name", &FXNode::op_name)
-        .def_readwrite("target", &FXNode::target)
-        .def_readwrite("args", &FXNode::args)
-        .def_readwrite("shape", &FXNode::shape)
-        .def_readwrite("dtype", &FXNode::dtype)
-        .def_readwrite("index", &FXNode::index);
+        .def_readwrite("name",      &FXNode::name)
+        .def_readwrite("op_name",   &FXNode::op_name)
+        .def_readwrite("target",    &FXNode::target)
+        .def_readwrite("args",      &FXNode::args)
+        .def_readwrite("shape",     &FXNode::shape)
+        .def_readwrite("dtype",     &FXNode::dtype)
+        .def_readwrite("index",     &FXNode::index);
 
     m.def("lower_fx", &lower_fx, "Performs compilation steps for fusion and lowering to Metal");
 }

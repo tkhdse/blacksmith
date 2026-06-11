@@ -9,10 +9,7 @@ using namespace std;
 // FXNode -> simplified C++ based representation for PyTorch FX Nodes (from blacksmith Ppython library).
 class FXNode {
 public:
-    FXNode(string name, string target) {
-        this->name = name;
-        this->target = target;
-    }
+    FXNode() = default;
 
     string name;
     string op_name;
@@ -22,4 +19,10 @@ public:
     vector<int> shape;
     string dtype;
     int index = -1;
+
+protected:
+    explicit FXNode(const string name, const string target) {
+        this->name = name;
+        this->target = target;
+    }
 };

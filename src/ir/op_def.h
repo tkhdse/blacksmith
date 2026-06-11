@@ -33,41 +33,26 @@ public:
     virtual ~FCOp() = 0;
     
     // for debugging
-    void printInfo() {
-        string target = FXNode::target;
-        string out = "";
-
-        switch (this->op_class_) {
-            case opInjective:
-                out += "Injective";
-                break;
-            case opReduction:
-                out += "Reduction";
-                break;
-            case opCOF:
-            out += "Complex-out-fusable";
-                break;
-            case opOpaque: 
-                out += "Opaque";
-            default:
-                out += "Not set";
-                break;
-        }
-    
-        cout << target << ": " << out << endl;
-    }
+    void printInfo();
 
 protected:
     explicit FCOp(string name, string target, OperatorClass op_class) : FXNode(name, target), op_class_(op_class) {}
 
 private:
-    const OperatorClass op_class_; 
+    const OperatorClass op_class_;
+    vector<FCOp*> neighbors = {};
 };
 
 
 class FCAddOp : public FCOp {
 public:
     FCAddOp(const FXNode& fx) : FCOp(fx.name, fx.target, opInjective) {}
+};
+
+
+class FCPermuteOp : public FCOp {
+public:
+    FCPermuteOp(const FXNode& fx) : FCOp(fx.name, fx.target, opInjective) {}
 };
 
 
