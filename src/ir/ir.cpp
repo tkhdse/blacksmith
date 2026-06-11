@@ -8,7 +8,7 @@ FusionGraph* buildFCGraph(vector<FXNode> fx_nodes) {
 
     for (auto& node : fx_nodes) {
         // name -> FCNode
-        FCOp* op = getFCNodeFromTarget(node.target);
+        FCOp* op = allocateFCNodeFromTarget(node.target);
 
         // insert into graph
         fusionGraph->insertNode(op);
@@ -20,7 +20,7 @@ FusionGraph* buildFCGraph(vector<FXNode> fx_nodes) {
 
 // change function to accept an Enum/type of its own for easier comparison
 // .compare is too cumbersome
-FCOp* getFCNodeFromTarget(string& target) {
+FCOp* allocateFCNodeFromTarget(string& target) {
     if (target.compare("add")) {
         return new FCAddOp();
     }
