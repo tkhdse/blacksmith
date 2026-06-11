@@ -35,6 +35,9 @@ public:
     // for debugging
     void printInfo();
 
+    vector<FCOp*> getNeighbors();
+    void appendNeighbor(FCOp* op);
+
 protected:
     explicit FCOp(string name, string target, OperatorClass op_class) : FXNode(name, target), op_class_(op_class) {}
 

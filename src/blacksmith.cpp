@@ -27,7 +27,7 @@ int lower_fx(const py::list& fx_graph) {
         fx_nodes.push_back(fx_node);
     }
 
-    print_nodes(fx_nodes);
+    // print_nodes(fx_nodes);
 
     FusionGraph* fusionGraph = buildFCGraph(fx_nodes);
     

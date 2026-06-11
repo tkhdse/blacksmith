@@ -29,10 +29,16 @@ public:
         this->nodes.push_back(op);
     }
 
+    unordered_map<string, FCOp*> name2op; // -> op_name -> FCOp
+    // unordered_map<string, FCOp*> dataDeps; // -> op_name -> FCOp
+    
 
 private:
     // store all FCNodes
     vector<FCOp*> nodes;
+    // unordered_map<> placeholders; // placeholder_name -> dependency
+
+
     // entrypoints
 };
 

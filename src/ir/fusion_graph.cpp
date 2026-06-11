@@ -5,9 +5,14 @@
 
 FusionGraph* buildFCGraph(vector<FXNode> fx_nodes) {
 
-    FusionGraph* fusionGraph = new FusionGraph();
+    FusionGraph* fg = new FusionGraph();
 
     for (auto& node : fx_nodes) {
+
+        auto it = fg->name2op.find(node.name);
+        if (it != fg->name2op.end()) {
+            return nullptr;
+        }
 
         if (node.op_name.compare("call_function") == 0) {
             
@@ -15,13 +20,20 @@ FusionGraph* buildFCGraph(vector<FXNode> fx_nodes) {
             FCOp* op = allocateFCNodeFromTarget(node);
             
             // insert into graph
-            fusionGraph->insertNode(op);
+            fg->insertNode(op);
+
+            // store name->Op for later retrieval
+            fg->name2op[node.name] = op;
+
+            for (auto& dep : node.args) {
+                if (fg->name2op.find(dep) != fg->name2op.end()) {
+                    fg->name2op[dep]->appendNeighbor(op);
+                }
+            }
         }
-
-
     }
 
-    return fusionGraph;
+    return fg;
 }
 
 
