@@ -31,8 +31,6 @@ enum OperatorClass {
 class FCOp : public FXNode {
 public:
     virtual ~FCOp() = 0;
-
-    explicit FCOp(OperatorClass op_class) : op_class_(op_class) {}
     
     // for debugging
     void printInfo() {
@@ -59,6 +57,9 @@ public:
         cout << target << ": " << out << endl;
     }
 
+protected:
+    explicit FCOp(string name, string target, OperatorClass op_class) : FXNode(name, target), op_class_(op_class) {}
+
 private:
     const OperatorClass op_class_; 
 };
@@ -66,17 +67,17 @@ private:
 
 class FCAddOp : public FCOp {
 public:
-    FCAddOp() : FCOp(opInjective) {}
+    FCAddOp(const FXNode& fx) : FCOp(fx.name, fx.target, opInjective) {}
 };
 
 
 class FCSumOp : public FCOp {
 public:
-    FCSumOp() : FCOp(opReduction) {}
+    FCSumOp(const FXNode& fx) : FCOp(fx.name, fx.target, opReduction) {}
 };
 
 
 class FCReLUOp : public FCOp {
 public:
-    FCReLUOp() : FCOp(opInjective) {}
+    FCReLUOp(const FXNode& fx) : FCOp(fx.name, fx.target, opInjective) {}
 };

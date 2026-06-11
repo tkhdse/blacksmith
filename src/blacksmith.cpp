@@ -7,7 +7,7 @@
 #include <variant>
 #include <iostream>
 
-#include "ir/ir.h"
+#include "ir/fusion_graph.h"
 #include "utils/fx_utils.h"
 #include "ir/node_def.h"
 #include "ir/op_def.h"
@@ -20,8 +20,6 @@ using namespace std;
 
 
 int lower_fx(const py::list& fx_graph) {
-    cout << "entered" << endl;
-
     vector<FXNode> fx_nodes;
 
     for (auto& item : fx_graph) {
@@ -29,7 +27,7 @@ int lower_fx(const py::list& fx_graph) {
         fx_nodes.push_back(fx_node);
     }
 
-    print_nodes(fx_nodes);
+    // print_nodes(fx_nodes);
 
     FusionGraph* fusionGraph = buildFCGraph(fx_nodes);
     

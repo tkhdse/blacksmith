@@ -40,4 +40,4 @@ private:
 FusionGraph* buildFCGraph(vector<FXNode> fx_nodes);
 
 // these nodes are used to compose our FusionGraph
-FCOp* allocateFCNodeFromTarget(string& target);
+FCOp* allocateFCNodeFromTarget(FXNode& target);
