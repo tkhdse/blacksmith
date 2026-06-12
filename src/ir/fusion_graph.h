@@ -12,8 +12,13 @@ class FuseGroup {
 public: 
     FuseGroup() {}
 
+    // lowers the current operator class based on defined hierarchy
+    //  injective -> reduction -> complex-out-fuse -> opaque
+    void lowerGroup(OperatorClass new_class);
+
 private:
     vector<FCOp*> nodes;
+    OperatorClass curr_op_class;
 };
 
 

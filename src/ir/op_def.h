@@ -44,6 +44,7 @@ protected:
 private:
     const OperatorClass op_class_;
     vector<FCOp*> neighbors = {};
+    vector<string> tensor_deps = {}; // temporary string -> promote to TensorDep object
 };
 
 
