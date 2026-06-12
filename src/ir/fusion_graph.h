@@ -8,6 +8,15 @@
 using namespace std;
 
 
+class FuseGroup {
+public: 
+    FuseGroup() {}
+
+private:
+    vector<FCOp*> nodes;
+};
+
+
 class FusionGraph {
 
 public:
@@ -36,6 +45,7 @@ public:
 private:
     // store all FCNodes
     vector<FCOp*> nodes;
+    vector<FuseGroup*> fuse_groups;
     // unordered_map<> placeholders; // placeholder_name -> dependency
 
 
