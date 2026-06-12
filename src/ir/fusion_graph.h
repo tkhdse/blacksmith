@@ -10,12 +10,22 @@ using namespace std;
 
 class FuseGroup {
 public: 
-    FuseGroup() {}
+    FuseGroup(const int id) {
+        this->id = id;
+    }
 
     ~FuseGroup() {
         for (auto& node : this->nodes) {
             delete node;
         }
+    }
+
+    vector<FCOp*> getOperators() {
+        return this->nodes;
+    }
+
+    int getId() {
+        return this->id;
     }
 
 
@@ -33,8 +43,9 @@ public:
     void lowerGroup(OperatorClass cls);
 
 private:
-    vector<FCOp*> nodes;
+    vector<FCOp*> nodes = {};
     OperatorClass curr_op_class = opInjective; // injective by default (highest precedence)
+    int id;
 };
 
 
@@ -60,7 +71,7 @@ public:
     // }
 
     FuseGroup* createNewFuseGroup() {
-        FuseGroup* nfg = new FuseGroup;
+        FuseGroup* nfg = new FuseGroup(this->cur_id);
         this->fuse_groups.push_back(nfg);
         return nfg;
     }
@@ -73,6 +84,7 @@ private:
     // store all FCNodes
     FuseGroup* entrypoint;
     vector<FuseGroup*> fuse_groups;
+    int cur_id = 0;
     // unordered_map<> placeholders; // placeholder_name -> dependency
 
 
