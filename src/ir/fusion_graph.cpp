@@ -5,12 +5,12 @@
 
 FusionGraph* buildFCGraph(vector<FXNode> fx_nodes) {
 
-    FusionGraph* fg = new FusionGraph();
+    FusionGraph* graph = new FusionGraph();
+    FuseGroup* fg = graph->createNewFuseGroup();
 
     for (auto& node : fx_nodes) {
-
-        auto it = fg->name2op.find(node.name);
-        if (it != fg->name2op.end()) {
+        auto it = graph->name2op.find(node.name);
+        if (it != graph->name2op.end()) {
             return nullptr;
         }
 
@@ -18,22 +18,32 @@ FusionGraph* buildFCGraph(vector<FXNode> fx_nodes) {
             
             // target -> FCNode
             FCOp* op = allocateFCNodeFromTarget(node);
+
+            if (fg->checkLegalFuse(op)) {
+                fg->lowerGroup(op->getOpClass());
+                
+            } else {
+                fg = graph->createNewFuseGroup();
+            }
             
             // insert into graph
-            fg->insertNode(op);
+            // graph->insertNode(op);
+
+            // insert to group (can either be old or new FuseGroup)
+            fg->addToGroup(op);
 
             // store name->Op for later retrieval
-            fg->name2op[node.name] = op;
+            graph->name2op[node.name] = op;
 
             for (auto& dep : node.args) {
-                if (fg->name2op.find(dep) != fg->name2op.end()) {
-                    fg->name2op[dep]->appendNeighbor(op);
+                if (graph->name2op.find(dep) != graph->name2op.end()) {
+                    graph->name2op[dep]->appendNeighbor(op);
                 }
             }
         }
     }
 
-    return fg;
+    return graph;
 }
 
 
@@ -55,4 +65,19 @@ FCOp* allocateFCNodeFromTarget(FXNode& fx) {
     }
 
     return new FCAddOp(fx);
+}
+
+
+
+bool FuseGroup::checkLegalFuse(FCOp* op) {
+    return isLegalFuse(curr_op_class, op->getOpClass()); 
+}
+
+void FuseGroup::addToGroup(FCOp* op) {
+    this->nodes.push_back(op);
+}
+
+void FuseGroup::lowerGroup(OperatorClass cls) {
+    // To Do: upgrade this to use the LatticeValue class
+    this->curr_op_class = max(this->curr_op_class, cls);
 }

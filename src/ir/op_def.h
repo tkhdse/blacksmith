@@ -25,6 +25,26 @@ enum OperatorClass {
     opOpaque = 3,   //  opaque
 };
 
+inline bool isLegalFuse(OperatorClass a, OperatorClass b) {
+    if (a == opOpaque || b == opOpaque) return false;
+    bool ret = (a == opInjective && b == opInjective) || (a == opInjective && b == opReduction) || (a == opCOF && b == opInjective);
+    return ret;
+}
+
+
+// To Do:
+class LatticeValue {
+public:
+    OperatorClass cls;
+    LatticeValue(OperatorClass cls) {
+        this->cls = cls;
+    }
+
+    OperatorClass meet(const LatticeValue& other) const {
+        // include comparison/dominance logic
+        return opInjective;
+    }
+};
 
 
 // FCOp -> "Fuse Candidate" Op. This must carry forward information about the fusion pattern.
@@ -37,6 +57,7 @@ public:
 
     vector<FCOp*> getNeighbors();
     void appendNeighbor(FCOp* op);
+    OperatorClass getOpClass() { return op_class_; }
 
 protected:
     explicit FCOp(string name, string target, OperatorClass op_class) : FXNode(name, target), op_class_(op_class) {}
