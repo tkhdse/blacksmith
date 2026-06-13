@@ -32,7 +32,7 @@ int lower_fx(const py::list& fx_graph) {
     FusionGraph* fusionGraph = buildFCGraph(fx_nodes);
     
     for (auto& fg : fusionGraph->getGroups()) {
-        cout << "Group: " << fg->getId() << endl;
+        cout << "Group: " << fg->getId() << ' ' << '[' << getOperatorClassString(fg->getOperatorClass()) << ']' << endl;
         for (auto& fcop : fg->getOperators()) {
             fcop->printInfo();
         }

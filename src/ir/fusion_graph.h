@@ -29,6 +29,10 @@ public:
     }
 
 
+    OperatorClass getOperatorClass() {
+        return curr_op_class;
+    }
+
     // checkLegalFuse(node) -> check node's OperatorClass against the current FuseGroup
     //  true -> add node to current FuseGroup and promote FuseGroup class if needed
     //  false -> split and make a new FuseGroup

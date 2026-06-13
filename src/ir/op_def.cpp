@@ -13,9 +13,22 @@ vector<FCOp*> FCOp::getNeighbors() {
 
 void FCOp::printInfo() {
     string target = FXNode::target;
-    string out = "";
+    string out = getOperatorClassString(this->op_class_);
 
-    switch (this->op_class_) {
+    cout << target << ": " << out << endl;
+
+    string vec = "";
+    for (auto& op : neighbors) {
+        vec += op->name + ", ";
+    }
+
+    cout << '\t' << "Next: " << '[' << vec << ']' << endl;
+}
+
+string getOperatorClassString(OperatorClass op_class) {
+    string out = "";
+    
+    switch (op_class) {
         case opInjective:
             out += "Injective";
             break;
@@ -31,13 +44,5 @@ void FCOp::printInfo() {
             out += "Not set";
             break;
     }
-
-    cout << target << ": " << out << endl;
-
-    string vec = "";
-    for (auto& op : neighbors) {
-        vec += op->name + ", ";
-    }
-
-    cout << '\t' << "Next: " << '[' << vec << ']' << endl;
+    return out;
 }

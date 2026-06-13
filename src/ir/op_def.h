@@ -47,6 +47,9 @@ public:
 };
 
 
+string getOperatorClassString(OperatorClass op_class);
+
+
 // FCOp -> "Fuse Candidate" Op. This must carry forward information about the fusion pattern.
 class FCOp : public FXNode {
 public:
