@@ -8,7 +8,8 @@ enum class AtenTarget {
     None = 0,
     AddMM,
     Permute,
-    ReLU
+    ReLU,
+    SumIntList
 };
 
 AtenTarget parseTarget(const string& target);

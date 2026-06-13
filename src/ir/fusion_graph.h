@@ -73,6 +73,7 @@ public:
     FuseGroup* createNewFuseGroup() {
         FuseGroup* nfg = new FuseGroup(this->cur_id);
         this->fuse_groups.push_back(nfg);
+        this->cur_id += 1;
         return nfg;
     }
 

@@ -91,3 +91,8 @@ class FCReLUOp : public FCOp {
 public:
     FCReLUOp(const FXNode& fx) : FCOp(fx.name, fx.target, opInjective) {}
 };
+
+class FCSumIntList : public FCOp {
+public:
+    FCSumIntList(const FXNode& fx) : FCOp(fx.name, fx.target, opReduction) {}
+};

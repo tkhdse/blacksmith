@@ -8,6 +8,7 @@ AtenTarget parseTarget(const string& target) {
         {"aten.permute.default",    AtenTarget::Permute},
         {"aten.addmm.default",      AtenTarget::AddMM},
         {"aten.relu.default",       AtenTarget::ReLU},
+        {"aten.sum.dim_IntList",    AtenTarget::SumIntList},
     };
 
 
