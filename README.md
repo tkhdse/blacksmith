@@ -40,6 +40,6 @@ Kernel dispatch and orchestration. Options for implementation include:
 * Source C++ file generation as used in TorchInductor.
 
 
-To do: 
+## To do: 
 * Code Generator for Metal kernels
 * Debugger [Compute Graph Visualization, Emit graph]
