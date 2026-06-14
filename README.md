@@ -28,4 +28,18 @@ Blacksmith leverages PyTorch's TorchDynamo to generate an FX Graph (compute grap
 FX Graph for the sample model defined in `python/main.py`:
 ![sample dag](docs/sample_DAG.jpg)
 
-TBA
+The architecture makes use of the following fusion passes and lowering for correct execution:
+* Fusion Analysis
+* Segmentation
+* Scheduling
+* Codegen
+
+
+Kernel dispatch and orchestration. Options for implementation include:
+* VM bytecode and execution as used in TVM.
+* Source C++ file generation as used in TorchInductor.
+
+
+To do: 
+* Code Generator for Metal kernels
+* Debugger [Compute Graph Visualization, Emit graph]
