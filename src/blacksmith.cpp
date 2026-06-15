@@ -11,6 +11,8 @@
 #include "utils/fx_utils.h"
 #include "ir/node_def.h"
 #include "ir/op_def.h"
+
+#include "source_gen/gen.h"
 // #include "utils/op_class.h"
 
 
@@ -38,6 +40,7 @@ int lower_fx(const py::list& fx_graph) {
         }
     }
 
+    writeToFile();
     delete fusionGraph;
     return 0;
 }
