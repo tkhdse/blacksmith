@@ -15,7 +15,8 @@ void Fuser::runSegmentationPass() {
 
 void Fuser::printFuseResults() {
     for (auto& fg : graph->getGroups()) {
-        cout << "Group: " << fg->getId() << ' ' << fg->getFusedName() << ' ' << '[' << getOperatorClassString(fg->getOperatorClass()) << ']' << endl;
+        string isEntry =  fg == graph->getEntrypoint() ? "(entry) " : "";
+        cout << isEntry << "Group: " << fg->getId() << ' ' << fg->getFusedName() << ' ' << '[' << getOperatorClassString(fg->getOperatorClass()) << ']' << endl;
         for (auto& fcop : fg->getOperators()) {
             fcop->printInfo();
         }

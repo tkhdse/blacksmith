@@ -6,7 +6,7 @@
 FusionGraph* buildFCGraph(vector<FXNode> fx_nodes) {
 
     FusionGraph* graph = new FusionGraph();
-    FuseGroup* fg = graph->createNewFuseGroup();
+    FuseGroup* fg;// = graph->createNewFuseGroup();
 
     for (auto& node : fx_nodes) {
         auto it = graph->name2op.find(node.name);
@@ -14,11 +14,19 @@ FusionGraph* buildFCGraph(vector<FXNode> fx_nodes) {
             return nullptr;
         }
 
+        if (node.op_name.compare("placeholder") == 0) {
+            cout << node.name << ' ' <<  '(' << node.shape[0] << ',' << node.shape[1] << ')' << endl;
+        }
+
         if (node.op_name.compare("call_function") == 0) {
             
             // target -> FCNode
             FCOp* op = allocateFCNodeFromTarget(node);
+            
             fg = graph->createNewFuseGroup();
+            if (graph->isEntrypoint()) {
+                graph->setEntrypoint(fg);
+            }
             
             // insert to group (can either be old or new FuseGroup)
             fg->addToGroup(op);

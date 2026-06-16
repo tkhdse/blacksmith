@@ -90,6 +90,10 @@ public:
         return nfg;
     }
 
+    bool isEntrypoint() { return group_id == 1; }
+    FuseGroup* getEntrypoint() { return entrypoint; }
+    void setEntrypoint(FuseGroup* fg) { entrypoint = fg; }
+
     unordered_map<string, FCOp*> name2op; // -> op_name -> FCOp
     // unordered_map<string, FCOp*> dataDeps; // -> op_name -> FCOp
     
