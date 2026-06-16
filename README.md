@@ -45,5 +45,5 @@ Kernel dispatch and orchestration. Options for implementation include:
 ## To do: 
 * Code Generator for Metal kernels
 * Debugger [Compute Graph Visualization, Emit graph]
-* Dynamic Shape Approach
+* Dynamic Shape Approach (currently starting with Static shape support for simplicity)
 * Explicit API (compiled_model = blacksmith.compile(model))
