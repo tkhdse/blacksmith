@@ -41,6 +41,9 @@ Kernel dispatch and orchestration. Options for implementation include:
 * VM bytecode and execution as used in TVM.
 * Source C++ file generation as used in TorchInductor.
 
+Blacksmith aims to conform to this architecture. Its design goal is centered around extensibility:
+![arch](docs/arch.png)
+
 
 ## To do: 
 * Code Generator for Metal kernels
