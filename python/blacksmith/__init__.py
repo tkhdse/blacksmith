@@ -12,7 +12,7 @@ class BlacksmithModel:
     ret: int
     input_shape: torch.Size
     def print_model_info(self):
-        print(f"Model compiled with return value: {self.ret}\n\t Takes input with dims: {self.input_shape}")
+        print(f"Model compiled with return value: {self.ret}\n  Takes input with dims: {self.input_shape}")
 
 
 

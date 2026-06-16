@@ -19,6 +19,8 @@ FusionGraph* buildFCGraph(vector<FXNode> fx_nodes) {
             // target -> FCNode
             FCOp* op = allocateFCNodeFromTarget(node);
 
+
+            // fuse logic
             if (fg->checkLegalFuse(op)) {
                 fg->lowerGroup(op->getOpClass());
                 
@@ -61,7 +63,7 @@ FCOp* allocateFCNodeFromTarget(FXNode& fx) {
         return new FCReLUOp(fx);
     case AtenTarget::SumIntList:
         return new FCSumIntList(fx);
-        
+
 
     default: 
         cerr << "Unsupported Operator: " << '[' << fx.target << ']' << endl;

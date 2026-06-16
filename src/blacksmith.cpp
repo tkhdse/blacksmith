@@ -13,6 +13,7 @@
 #include "ir/op_def.h"
 
 #include "source_gen/gen.h"
+#include "fuser/fuse.h"
 // #include "utils/op_class.h"
 
 
@@ -29,16 +30,13 @@ int lower_fx(const py::list& fx_graph) {
         fx_nodes.push_back(fx_node);
     }
 
-    // print_nodes(fx_nodes);
-
+    // static shape propagation pass: turn fx_nodes into graph and perform a topological walk and shape propagation
     FusionGraph* fusionGraph = buildFCGraph(fx_nodes);
+
+    // apply analysis and segmentation
+    Fuser* fuser = new Fuser(fusionGraph);
     
-    for (auto& fg : fusionGraph->getGroups()) {
-        cout << "Group: " << fg->getId() << ' ' << '[' << getOperatorClassString(fg->getOperatorClass()) << ']' << endl;
-        for (auto& fcop : fg->getOperators()) {
-            fcop->printInfo();
-        }
-    }
+    fuser->printFuseResults();
 
     writeToFile();
     delete fusionGraph;

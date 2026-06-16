@@ -50,6 +50,7 @@ private:
     vector<FCOp*> nodes = {};
     OperatorClass curr_op_class = opInjective; // injective by default (highest precedence)
     int id;
+    string fused_kernel_name;
 };
 
 
@@ -89,6 +90,7 @@ private:
     // store all FCNodes
     FuseGroup* entrypoint;
     vector<FuseGroup*> fuse_groups;
+    // unordered_map<string, FuseGroup*> fuse_groups;
     int cur_id = 0;
     // unordered_map<> placeholders; // placeholder_name -> dependency
 
