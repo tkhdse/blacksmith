@@ -1,6 +1,6 @@
 # Blacksmith: a Compute Graph Operation Fuser for Metal
 
-The blacksmith compiler builds on my previous work on [soptRT](https://github.com/tkhdse/soptRT). Blacksmith is designed to perform fusion for Metal kernels so that I can program on my new Mac GPU. 
+The Blacksmith compiler builds on my previous work on [soptRT](https://github.com/tkhdse/soptRT). Blacksmith is designed to perform fusion for Metal kernels so that I can program on my new Mac GPU. 
 
 Blacksmith's design stems from thorough research between 3 prominent players in Deep Learning Compilers: TVM, nvFuser, and TorchInductor. The 3 differ architecturally, and Blacksmith aims to draw inspiration from the best parts of each design to form a usable Metal compiler. 
 
