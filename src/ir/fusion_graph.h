@@ -11,7 +11,8 @@ using namespace std;
 class FuseGroup {
 public: 
     FuseGroup(const int id) {
-        this->id = id;
+        this->group_id = id;
+        this->fused_kernel_name = "";
     }
 
     ~FuseGroup() {
@@ -25,7 +26,11 @@ public:
     }
 
     int getId() {
-        return this->id;
+        return this->group_id;
+    }
+
+    string getFusedName() {
+        return this->fused_kernel_name;
     }
 
 
@@ -49,8 +54,11 @@ public:
 private:
     vector<FCOp*> nodes = {};
     OperatorClass curr_op_class = opInjective; // injective by default (highest precedence)
-    int id;
+    int group_id;
     string fused_kernel_name;
+
+    vector<int> in_shape;
+    vector<int> out_shape;
 };
 
 
@@ -76,9 +84,9 @@ public:
     // }
 
     FuseGroup* createNewFuseGroup() {
-        FuseGroup* nfg = new FuseGroup(this->cur_id);
+        FuseGroup* nfg = new FuseGroup(this->group_id);
         this->fuse_groups.push_back(nfg);
-        this->cur_id += 1;
+        this->group_id += 1;
         return nfg;
     }
 
@@ -91,7 +99,7 @@ private:
     FuseGroup* entrypoint;
     vector<FuseGroup*> fuse_groups;
     // unordered_map<string, FuseGroup*> fuse_groups;
-    int cur_id = 0;
+    int group_id = 0;
     // unordered_map<> placeholders; // placeholder_name -> dependency
 
 

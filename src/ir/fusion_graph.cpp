@@ -18,19 +18,8 @@ FusionGraph* buildFCGraph(vector<FXNode> fx_nodes) {
             
             // target -> FCNode
             FCOp* op = allocateFCNodeFromTarget(node);
-
-
-            // fuse logic
-            if (fg->checkLegalFuse(op)) {
-                fg->lowerGroup(op->getOpClass());
-                
-            } else {
-                fg = graph->createNewFuseGroup();
-            }
+            fg = graph->createNewFuseGroup();
             
-            // insert into graph
-            // graph->insertNode(op);
-
             // insert to group (can either be old or new FuseGroup)
             fg->addToGroup(op);
 
@@ -79,6 +68,7 @@ bool FuseGroup::checkLegalFuse(FCOp* op) {
 }
 
 void FuseGroup::addToGroup(FCOp* op) {
+    this->fused_kernel_name += "_" + op->name;
     this->nodes.push_back(op);
 }
 

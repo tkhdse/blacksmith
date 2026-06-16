@@ -74,28 +74,38 @@ private:
 
 class FCAddOp : public FCOp {
 public:
-    FCAddOp(const FXNode& fx) : FCOp(fx.name, fx.target, opInjective) {}
+    FCAddOp(const FXNode& fx) : FCOp(fx.name, fx.target, opInjective) {
+        this->name = "add";
+    }
 };
 
 
 class FCPermuteOp : public FCOp {
 public:
-    FCPermuteOp(const FXNode& fx) : FCOp(fx.name, fx.target, opInjective) {}
+    FCPermuteOp(const FXNode& fx) : FCOp(fx.name, fx.target, opInjective) {
+        this->name = "permute";
+    }
 };
 
 
 class FCSumOp : public FCOp {
 public:
-    FCSumOp(const FXNode& fx) : FCOp(fx.name, fx.target, opReduction) {}
+    FCSumOp(const FXNode& fx) : FCOp(fx.name, fx.target, opReduction) {
+        this->name = "sum";
+    }
 };
 
 
 class FCReLUOp : public FCOp {
 public:
-    FCReLUOp(const FXNode& fx) : FCOp(fx.name, fx.target, opInjective) {}
+    FCReLUOp(const FXNode& fx) : FCOp(fx.name, fx.target, opInjective) {
+        this->name = "relu";
+    }
 };
 
 class FCSumIntList : public FCOp {
 public:
-    FCSumIntList(const FXNode& fx) : FCOp(fx.name, fx.target, opReduction) {}
+    FCSumIntList(const FXNode& fx) : FCOp(fx.name, fx.target, opReduction) {
+        this->name = "sumIntList";
+    }
 };

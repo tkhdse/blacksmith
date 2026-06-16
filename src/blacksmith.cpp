@@ -31,13 +31,14 @@ int lower_fx(const py::list& fx_graph) {
     }
 
     // static shape propagation pass: turn fx_nodes into graph and perform a topological walk and shape propagation
+    // each node starts in its own FusionGroup for now
     FusionGraph* fusionGraph = buildFCGraph(fx_nodes);
 
-    // apply analysis and segmentation
+    // apply Fusion passes
     Fuser* fuser = new Fuser(fusionGraph);
-    
     fuser->printFuseResults();
 
+    // writes temporary "Hello, world!" file for now...
     writeToFile();
     delete fusionGraph;
     return 0;
