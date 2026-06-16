@@ -2,8 +2,6 @@ import blacksmith
 import torch
 import torch.nn as nn
 
-
-@blacksmith.compile
 class Model(nn.Module):
     def __init__(self):
         super().__init__()
@@ -21,3 +19,11 @@ class Model(nn.Module):
         # Group B: injective ops after reduction
         x = self.relu_post(self.fc_post(x))  # addmm + relu
         return x
+
+if __name__ == "__main__":
+    model = Model()
+
+    # takes an [W x 8] input
+    inp = torch.randn(1000, 8)
+    ret = blacksmith.compile(model, tensor_input=inp)
+    ret.print_model_info()

@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-@blacksmith.compile
+
 class Model(nn.Module):
     def __init__(self):
         super().__init__()
@@ -17,3 +17,12 @@ class Model(nn.Module):
     def forward(self, x):
         x = self.relu(self.fc1(x))
         return self.fc2(x)
+
+
+if __name__ == "__main__":
+    model = Model()
+
+    # takes an [W x 8] input
+    inp = torch.randn(1000, 8)
+    ret = blacksmith.compile(model, tensor_input=inp)
+    ret.print_model_info()

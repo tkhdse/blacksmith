@@ -21,3 +21,11 @@ import torch.nn.functional as F
 #         return self.fc2(x)
 
 
+
+# if __name__ == "__main__":
+#     model = Model()
+
+#     # takes an [W x 8] input
+#     inp = torch.randn(1000, 8)
+#     ret = blacksmith.compile(model, tensor_input=inp)
+#     ret.print_model_info() 
