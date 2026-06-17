@@ -16,6 +16,8 @@ FusionGraph* buildFCGraph(vector<FXNode> fx_nodes) {
 
         if (node.op_name.compare("placeholder") == 0) {
             cout << node.name << ' ' <<  '(' << node.shape[0] << ',' << node.shape[1] << ')' << endl;
+            TensorNode* tn = allocateTensor(node); // potentially removable
+            graph->addTensorToGraph(tn);
         }
 
         if (node.op_name.compare("call_function") == 0) {
@@ -70,7 +72,7 @@ FCOp* allocateFCNodeFromTarget(FXNode& fx) {
 }
 
 TensorNode* allocateTensor(FXNode& fx) {
-    return new TensorNode();
+    return new TensorNode(fx);
 }
 
 

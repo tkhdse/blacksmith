@@ -10,6 +10,7 @@ using namespace std;
 class FXNode {
 public:
     FXNode() = default;
+    FXNode(const FXNode& node) = default;
 
     string name;
     string op_name;

@@ -4,6 +4,7 @@
 
 #include "../ir/node_def.h"
 #include "../ir/op_def.h"
+#include "../ir/tensor_node_def.h"
 
 using namespace std;
 
@@ -72,7 +73,11 @@ public:
     ~FusionGraph() {
         for (auto& fg : this->fuse_groups) {
             delete fg;
-        }        
+        }
+
+        for (auto& pair : tensors) {
+            delete pair.second; // tensorNode
+        }
     }
 
     vector<FuseGroup*> getGroups() const {
@@ -83,9 +88,11 @@ public:
     //     this->nodes.push_back(op);
     // }
 
-    // TensorNode* registerTensor() {
-
-    // }
+    void addTensorToGraph(TensorNode* tn) {
+        if (tensors.find(tn->name) != tensors.end()) {
+            tensors.insert({tn->name, tn});
+        }
+    }
 
     FuseGroup* createNewFuseGroup() {
         FuseGroup* nfg = new FuseGroup(this->group_id);
@@ -105,6 +112,8 @@ private:
     FuseGroup* entrypoint;
     vector<FuseGroup*> fuse_groups;
     // unordered_map<string, FuseGroup*> fuse_groups;
+
+    unordered_map<string, TensorNode*> tensors;
     int group_id = 0;
     // unordered_map<> placeholders; // placeholder_name -> dependency
 
@@ -117,3 +126,5 @@ FusionGraph* buildFCGraph(vector<FXNode> fx_nodes);
 
 // these nodes are used to compose our FusionGraph
 FCOp* allocateFCNodeFromTarget(FXNode& target);
+
+TensorNode* allocateTensor(FXNode& fx);
