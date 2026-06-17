@@ -83,6 +83,10 @@ public:
     //     this->nodes.push_back(op);
     // }
 
+    // TensorNode* registerTensor() {
+
+    // }
+
     FuseGroup* createNewFuseGroup() {
         FuseGroup* nfg = new FuseGroup(this->group_id);
         this->fuse_groups.push_back(nfg);
@@ -95,8 +99,6 @@ public:
     void setEntrypoint(FuseGroup* fg) { entrypoint = fg; }
 
     unordered_map<string, FCOp*> name2op; // -> op_name -> FCOp
-    // unordered_map<string, FCOp*> dataDeps; // -> op_name -> FCOp
-    
 
 private:
     // store all FCNodes

@@ -34,7 +34,7 @@ FusionGraph* buildFCGraph(vector<FXNode> fx_nodes) {
             // store name->Op for later retrieval
             graph->name2op[node.name] = op;
 
-            for (auto& dep : node.args) {
+            for (auto& dep : node.args) { // an argument can either be a dependency node (FCOp) or a placeholder
                 if (graph->name2op.find(dep) != graph->name2op.end()) {
                     graph->name2op[dep]->appendNeighbor(op);
                 }
@@ -69,6 +69,9 @@ FCOp* allocateFCNodeFromTarget(FXNode& fx) {
     return new FCAddOp(fx);
 }
 
+TensorNode* allocateTensor(FXNode& fx) {
+    return new TensorNode();
+}
 
 
 bool FuseGroup::checkLegalFuse(FCOp* op) {
