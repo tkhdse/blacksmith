@@ -39,6 +39,14 @@ public:
         return curr_op_class;
     }
 
+    void addNeighbor(FuseGroup* new_fg) {
+        nextGroups.push_back(new_fg);
+    }
+
+    vector<FuseGroup*> getNeighbors() const {
+        return nextGroups;
+    }
+
     // checkLegalFuse(node) -> check node's OperatorClass against the current FuseGroup
     //  true -> add node to current FuseGroup and promote FuseGroup class if needed
     //  false -> split and make a new FuseGroup
@@ -54,6 +62,8 @@ public:
 
 private:
     vector<FCOp*> nodes = {};
+    vector<FuseGroup*> nextGroups = {};
+
     OperatorClass curr_op_class = opInjective; // injective by default (highest precedence)
     int group_id;
     string fused_kernel_name;
@@ -71,10 +81,13 @@ public:
     }
 
     ~FusionGraph() {
+
+        // delete allocated FuseGroups
         for (auto& fg : this->fuse_groups) {
             delete fg;
         }
 
+        // delete allocated Tensors/Placeholders
         for (auto& pair : tensors) {
             delete pair.second; // tensorNode
         }
@@ -89,7 +102,7 @@ public:
     // }
 
     void addTensorToGraph(TensorNode* tn) {
-        if (tensors.find(tn->name) != tensors.end()) {
+        if (tensors.find(tn->name) == tensors.end()) {
             tensors.insert({tn->name, tn});
         }
     }
