@@ -37,6 +37,11 @@ int lower_fx(const py::list& fx_graph) {
     // apply Fusion passes
     Fuser* fuser = new Fuser(fusionGraph);
     fuser->printFuseResults();
+    fuser->runSegmentationPass();
+
+    cout << "finished segmentation\n" << endl;
+
+    fuser->printFuseResults();
 
     // writes temporary "Hello, world!" file for now...
     writeToFile();

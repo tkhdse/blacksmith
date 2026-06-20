@@ -39,6 +39,15 @@ FusionGraph* buildFCGraph(vector<FXNode> fx_nodes) {
             // insert to group (can either be old or new FuseGroup)
             fg->addToGroup(op);
 
+
+            string new_fused_name = fg->getFusedName();
+            unordered_map<string, FuseGroup*>& fuse_groups = graph->getFuseGroups();
+            
+            // cout << "inserting... " << new_fused_name << endl; 
+            fuse_groups.insert({new_fused_name, fg});
+            fg->fuse_head = new_fused_name;
+            // cout << graph->getFuseGroups().size() << endl;
+
             // store name->Op for later retrieval
             graph->name2op[node.name] = op;
 
@@ -87,11 +96,39 @@ bool FuseGroup::checkLegalFuse(FCOp* op) {
 }
 
 void FuseGroup::addToGroup(FCOp* op) {
-    this->fused_kernel_name += "_" + op->name;
+    this->fused_kernel_name += "_" + op->name + to_string(group_id);
     this->nodes.push_back(op);
 }
 
 void FuseGroup::lowerGroup(OperatorClass cls) {
     // To Do: upgrade this to use the LatticeValue class
     this->curr_op_class = max(this->curr_op_class, cls);
+}
+
+void FuseGroup::mergeGroups(FuseGroup* fg) {
+    if (this->nextGroups.size() > 1) {
+        return;
+    }
+
+    this->nextGroups.clear();
+
+    // update name
+    // this->fused_kernel_name += fg->getFusedName();
+    
+    // update next ptrs
+    vector<FuseGroup*> nbrs = fg->getNeighbors();
+
+    for (auto& nbr : nbrs) {
+        this->nextGroups.push_back(nbr);
+    }
+    nbrs.clear();
+    
+    // move nodes to the current group
+    vector<FCOp*> ops = fg->getOperators();
+    for (auto* op : ops) {
+        this->addToGroup(op);
+    }
+
+    fg->getOperators().clear();
+    delete fg;
 }

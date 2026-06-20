@@ -22,7 +22,7 @@ public:
         }
     }
 
-    vector<FCOp*> getOperators() {
+    vector<FCOp*>& getOperators() {
         return this->nodes;
     }
 
@@ -43,9 +43,10 @@ public:
         nextGroups.push_back(new_fg);
     }
 
-    vector<FuseGroup*> getNeighbors() const {
+    vector<FuseGroup*>& getNeighbors() {
         return nextGroups;
     }
+
 
     // checkLegalFuse(node) -> check node's OperatorClass against the current FuseGroup
     //  true -> add node to current FuseGroup and promote FuseGroup class if needed
@@ -54,12 +55,15 @@ public:
     // To do: verify OperatorClass against legal transitions
     bool checkLegalFuse(FCOp* op);
 
+    void mergeGroups(FuseGroup* fg);
+
     void addToGroup(FCOp* op);
 
     // lowers the current operator class based on defined hierarchy
     //  injective -> reduction -> complex-out-fuse -> opaque
     void lowerGroup(OperatorClass cls);
 
+    string fuse_head;
 private:
     vector<FCOp*> nodes = {};
     vector<FuseGroup*> nextGroups = {};
@@ -83,17 +87,18 @@ public:
     ~FusionGraph() {
 
         // delete allocated FuseGroups
-        for (auto& fg : this->fuse_groups) {
-            delete fg;
+        for (auto& pair : this->fuse_groups) {
+            cout << "Deleting... " << pair.first << endl;
+            delete pair.second;
         }
 
         // delete allocated Tensors/Placeholders
         for (auto& pair : tensors) {
-            delete pair.second; // tensorNode
+            delete pair.second; 
         }
     }
 
-    vector<FuseGroup*> getGroups() const {
+    unordered_map<string, FuseGroup*>& getFuseGroups() {
         return this->fuse_groups;
     }
 
@@ -109,7 +114,6 @@ public:
 
     FuseGroup* createNewFuseGroup() {
         FuseGroup* nfg = new FuseGroup(this->group_id);
-        this->fuse_groups.push_back(nfg);
         this->group_id += 1;
         return nfg;
     }
@@ -121,17 +125,10 @@ public:
     unordered_map<string, FCOp*> name2op; // -> op_name -> FCOp
 
 private:
-    // store all FCNodes
     FuseGroup* entrypoint;
-    vector<FuseGroup*> fuse_groups;
-    // unordered_map<string, FuseGroup*> fuse_groups;
-
+    unordered_map<string, FuseGroup*> fuse_groups;
     unordered_map<string, TensorNode*> tensors;
     int group_id = 0;
-    // unordered_map<> placeholders; // placeholder_name -> dependency
-
-
-    // entrypoints
 };
 
 
