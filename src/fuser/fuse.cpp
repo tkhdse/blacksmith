@@ -20,9 +20,7 @@ void Fuser::runSegmentationPass() {
 
                 unordered_map<string, FuseGroup*>& fuse_groups = this->graph->getFuseGroups();
 
-                // cout << "Evicting... " << to_evict << endl;
                 fuse_groups.erase(to_evict);
-                
                 fuse_groups.erase(cur->fuse_head);
                 cur->fuse_head = cur->getFusedName();
                 fuse_groups.insert({cur->getFusedName(), cur});
@@ -38,7 +36,8 @@ void Fuser::runSegmentationPass() {
 }
 
 
-void Fuser::printFuseResults() {
+void Fuser::printFuseResults(string title) {
+    cout << title << endl;
 
     FuseGroup* fg = this->graph->getEntrypoint();
     while (fg) {

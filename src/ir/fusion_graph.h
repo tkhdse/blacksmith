@@ -70,6 +70,7 @@ private:
 
     OperatorClass curr_op_class = opInjective; // injective by default (highest precedence)
     int group_id;
+
     string fused_kernel_name;
 
     vector<int> in_shape;
@@ -121,6 +122,7 @@ public:
 private:
     FuseGroup* entrypoint;
     unordered_map<string, FuseGroup*> fuse_groups;
+    unordered_map<string, int> op2id; // implement new key strategy for fuseGroups
     unordered_map<string, TensorNode*> tensors;
     int group_id = 0;
 };

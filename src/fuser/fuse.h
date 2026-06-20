@@ -12,7 +12,7 @@ public:
     void runSchedulePass();
     void runCodegenPass();
 
-    void printFuseResults();
+    void printFuseResults(string title);
 
 private:
     FusionGraph* graph;
