@@ -85,15 +85,13 @@ public:
     }
 
     ~FusionGraph() {
-
         // delete allocated FuseGroups
         for (auto& pair : this->fuse_groups) {
-            cout << "Deleting... " << pair.first << endl;
             delete pair.second;
         }
-
+        
         // delete allocated Tensors/Placeholders
-        for (auto& pair : tensors) {
+        for (auto& pair : this->tensors) {
             delete pair.second; 
         }
     }
@@ -101,10 +99,6 @@ public:
     unordered_map<string, FuseGroup*>& getFuseGroups() {
         return this->fuse_groups;
     }
-
-    // void insertNode(FCOp* op) {
-    //     this->nodes.push_back(op);
-    // }
 
     void addTensorToGraph(TensorNode* tn) {
         if (tensors.find(tn->name) == tensors.end()) {

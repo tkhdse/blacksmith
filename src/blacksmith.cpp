@@ -39,7 +39,7 @@ int lower_fx(const py::list& fx_graph) {
     fuser->printFuseResults();
     fuser->runSegmentationPass();
 
-    cout << "finished segmentation\n" << endl;
+    cout << "Segmentation Pass:" << endl;
 
     fuser->printFuseResults();
 

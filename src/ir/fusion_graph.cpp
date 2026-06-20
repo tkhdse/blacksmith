@@ -39,14 +39,11 @@ FusionGraph* buildFCGraph(vector<FXNode> fx_nodes) {
             // insert to group (can either be old or new FuseGroup)
             fg->addToGroup(op);
 
-
             string new_fused_name = fg->getFusedName();
             unordered_map<string, FuseGroup*>& fuse_groups = graph->getFuseGroups();
             
-            // cout << "inserting... " << new_fused_name << endl; 
             fuse_groups.insert({new_fused_name, fg});
             fg->fuse_head = new_fused_name;
-            // cout << graph->getFuseGroups().size() << endl;
 
             // store name->Op for later retrieval
             graph->name2op[node.name] = op;
