@@ -55,7 +55,7 @@ public:
     // To do: verify OperatorClass against legal transitions
     bool checkLegalFuse(FCOp* op);
 
-    void mergeGroups(FuseGroup* fg);
+    int mergeGroups(FuseGroup* fg);
 
     void addToGroup(FCOp* op);
 
@@ -63,7 +63,6 @@ public:
     //  injective -> reduction -> complex-out-fuse -> opaque
     void lowerGroup(OperatorClass cls);
 
-    string fuse_head;
 private:
     vector<FCOp*> nodes = {};
     vector<FuseGroup*> nextGroups = {};

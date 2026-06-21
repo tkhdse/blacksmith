@@ -5,25 +5,23 @@ void Fuser::runSegmentationPass() {
     FuseGroup* cur = this->graph->getEntrypoint();
     
     while (cur) {
-        FuseGroup* nextNode = cur->getNeighbors()[0]; // make this more scalable later -> bad code
+        FuseGroup* next = cur->getNeighbors()[0]; // make this more scalable later -> bad code
         vector<FCOp*> cur_ops = cur->getOperators();
-        vector<FCOp*> next_ops = nextNode->getOperators();
+        vector<FCOp*> next_ops = next->getOperators();
 
         if (next_ops.size() > 0) {
             FCOp* op = next_ops[0];
             if (cur->checkLegalFuse(op)) {
-                cur->lowerGroup(nextNode->getOperatorClass());
+                cur->lowerGroup(next->getOperatorClass());
 
                 // merge cur and next   
-                string to_evict = nextNode->getFusedName();
-                cur->mergeGroups(nextNode);
+                int nextId = cur->mergeGroups(next);
 
+                // obtain reference to fuse_groups
                 unordered_map<string, FuseGroup*>& fuse_groups = this->graph->getFuseGroups();
-
-                fuse_groups.erase(to_evict);
-                fuse_groups.erase(cur->fuse_head);
-                cur->fuse_head = cur->getFusedName();
-                fuse_groups.insert({cur->getFusedName(), cur});
+                
+                string evictKey = "group_" + to_string(nextId);
+                fuse_groups.erase(evictKey);
             }
         }
         
