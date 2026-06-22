@@ -1,6 +1,9 @@
+from torch._decomp import get_decompositions
 import blacksmith_
 import torch
 import torch.nn as nn
+from torch._decomp import get_decompositions
+
 from dataclasses import dataclass
 from typing import Any, Tuple, Union
 
@@ -22,8 +25,13 @@ def compile(model: nn.Module,
             tensor_input: Union[torch.Tensor, Tuple[Any,...]]
 ) -> int:
 
+    # decomps = get_decompositions([
+    #     # torch.ops.aten.addmm.default,
+    #     # torch.ops.aten.linear.default,
+    # ])
+
     exported = torch.export.export(model, (tensor_input, ))
-    fx_out = exported.run_decompositions().graph
+    fx_out = exported.run_decompositions().graph # decomps
     print(fx_out)
 
     parsed = parse_fx(fx_out)

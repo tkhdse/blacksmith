@@ -80,6 +80,15 @@ public:
 };
 
 
+// linalg matrix multiply
+class FCMatMulOp: public FCOp {
+public:
+    FCMatMulOp(const FXNode& fx) : FCOp(fx.name, fx.target, opCOF) {
+        this->name = "matmul";
+    }
+};
+
+
 class FCPermuteOp : public FCOp {
 public:
     FCPermuteOp(const FXNode& fx) : FCOp(fx.name, fx.target, opInjective) {

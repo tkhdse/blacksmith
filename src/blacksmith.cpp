@@ -38,7 +38,6 @@ int lower_fx(const py::list& fx_graph) {
     Fuser* fuser = new Fuser(fusionGraph);
     fuser->printFuseResults("Graph Construction");
     fuser->runSegmentationPass();
-
     
     fuser->printFuseResults("Segmentation Pass");
 

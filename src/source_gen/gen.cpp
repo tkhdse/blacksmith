@@ -8,8 +8,8 @@ string emitCode() {
 }
 
 void writeToFile() {
-    FILE* codeFile = fopen("tmp/source.cpp", "w");
-    if (!codeFile) cerr << "File not found: tmp/source.cpp" << endl;
+    FILE* codeFile = fopen("/tmp/source.cpp", "w");
+    if (!codeFile) cerr << "File not found: /tmp/source.cpp" << endl;
 
     const string codeString = emitCode();
     fprintf(codeFile, "%s", codeString.c_str());

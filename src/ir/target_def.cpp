@@ -6,7 +6,8 @@
 AtenTarget parseTarget(const string& target) {
     static unordered_map<string, AtenTarget> mappings = {
         {"aten.permute.default",    AtenTarget::Permute},
-        {"aten.addmm.default",      AtenTarget::AddMM},
+        {"aten.add.default",      AtenTarget::Add},
+        {"aten.mm.default",      AtenTarget::MatMul},
         {"aten.relu.default",       AtenTarget::ReLU},
         {"aten.sum.dim_IntList",    AtenTarget::SumIntList},
     };
