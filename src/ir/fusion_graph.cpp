@@ -24,6 +24,10 @@ FusionGraph* buildFCGraph(vector<FXNode> fx_nodes) {
             
             // target -> FCNode
             FCOp* op = allocateFCNodeFromTarget(node);
+            if (!op) {
+                delete graph;
+                return nullptr;
+            }
             
             FuseGroup* tmp = graph->createNewFuseGroup();
             if (fg) {
@@ -66,8 +70,10 @@ FCOp* allocateFCNodeFromTarget(FXNode& fx) {
     AtenTarget target = parseTarget(fx.target);
 
     switch (target) {
-    case AtenTarget::AddMM:
+    case AtenTarget::Add:
         return new FCAddOp(fx);
+    case AtenTarget::MatMul:
+        return new FCMatMulOp(fx);
     case AtenTarget::Permute:
         return new FCPermuteOp(fx);
     case AtenTarget::ReLU:
@@ -80,7 +86,7 @@ FCOp* allocateFCNodeFromTarget(FXNode& fx) {
         cerr << "Unsupported Operator: " << '[' << fx.target << ']' << endl;
     }
 
-    return new FCAddOp(fx);
+    return nullptr;
 }
 
 TensorNode* allocateTensor(FXNode& fx) {

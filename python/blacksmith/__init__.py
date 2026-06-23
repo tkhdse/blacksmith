@@ -25,10 +25,15 @@ def compile(model: nn.Module,
             tensor_input: Union[torch.Tensor, Tuple[Any,...]]
 ) -> int:
 
-    # decomps = get_decompositions([
-    #     # torch.ops.aten.addmm.default,
-    #     # torch.ops.aten.linear.default,
-    # ])
+    decomps = get_decompositions([
+        torch.ops.aten.addmm.default,
+        torch.ops.aten.linear.default,
+    ])
+
+    print("Number of decompositions registered:", len(decomps))
+    print("Keys in decomp table:")
+    for key in decomps.keys():
+        print(" ", key)
 
     exported = torch.export.export(model, (tensor_input, ))
     fx_out = exported.run_decompositions().graph # decomps

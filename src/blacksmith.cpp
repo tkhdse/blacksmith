@@ -6,6 +6,7 @@
 #include <list>
 #include <variant>
 #include <iostream>
+#include <stdexcept>
 
 #include "ir/fusion_graph.h"
 #include "utils/fx_utils.h"
@@ -33,6 +34,9 @@ int lower_fx(const py::list& fx_graph) {
     // static shape propagation pass: turn fx_nodes into graph and perform a topological walk and shape propagation
     // each node starts in its own FusionGroup for now
     FusionGraph* fusionGraph = buildFCGraph(fx_nodes);
+    if (!fusionGraph) {
+        throw runtime_error("Encountered unsupported operator in FusionGraph construction");
+    }
 
     // apply Fusion passes
     Fuser* fuser = new Fuser(fusionGraph);
@@ -60,6 +64,7 @@ PYBIND11_MODULE(blacksmith_, m, py::mod_gil_not_used()) {
         .def_readwrite("shape",     &FXNode::shape)
         .def_readwrite("dtype",     &FXNode::dtype)
         .def_readwrite("index",     &FXNode::index);
+
 
     m.def("lower_fx", &lower_fx, "Performs compilation steps for fusion and lowering to Metal");
 }
