@@ -17,8 +17,6 @@ void Fuser::runSegmentationPass() {
         // vector<FCOp*> cur_ops = cur->getOperators();
         vector<FCOp*> next_ops = next->getOperators();
 
-
-
         FCOp* op = next_ops[0];
 
         if (cur->checkLegalFuse(op)) {
@@ -46,6 +44,29 @@ void Fuser::printFuseResults(string title) {
     while (fg) {
         string isEntry = (fg == graph->getEntrypoint()) ? "(entry) " : "";
         cout << isEntry << "Group: " << fg->getId() << ' ' << fg->getFusedName() << ' ' << '[' << getOperatorClassString(fg->getOperatorClass()) << ']' << " ";
+
+
+        string shape_string = "Shape: <";
+
+        vector<FCOp*>& fg_operators = fg->getOperators();
+        // get last operator
+        int last = fg_operators.size()-1;
+        FCOp* fg_shape_op = fg_operators[last];
+        vector<int> fg_shape = fg_shape_op->shape;
+
+        string dim_info = "";
+        for (auto& dim : fg_shape) {
+            dim_info += (to_string(dim) + ',');
+        }
+
+        if (dim_info.size() > 0){
+            dim_info[dim_info.size()-1] = '>';
+            shape_string += dim_info;
+        } else {
+            shape_string += ">";
+        }
+        cout << shape_string << " ";
+
 
         const auto& nbrGroups = fg->getNeighbors();
         if (nbrGroups.size() > 0) {

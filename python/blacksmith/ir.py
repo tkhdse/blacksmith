@@ -35,6 +35,7 @@ def parse_fx(graph: torch.fx.Graph):
             fx.shape = list(val.shape) # tuple -> array
             fx.dtype = str(val.dtype)
     
+        # print(fx.name, ':',fx.args)
         flattened_nodes.append(fx)
 
     return flattened_nodes

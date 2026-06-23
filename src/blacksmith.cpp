@@ -13,6 +13,8 @@
 #include "ir/node_def.h"
 #include "ir/op_def.h"
 
+#include "utils/parse.h"
+
 #include "source_gen/gen.h"
 #include "fuser/fuse.h"
 // #include "utils/op_class.h"

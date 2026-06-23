@@ -25,9 +25,10 @@ void FCOp::printInfo() {
     cout << '\t' << "Next: " << '[' << vec << ']' << endl;
 }
 
+
 string getOperatorClassString(OperatorClass op_class) {
     string out = "";
-    
+
     switch (op_class) {
         case opInjective:
             out += "Injective";

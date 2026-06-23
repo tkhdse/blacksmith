@@ -2,6 +2,9 @@
 #include "node_def.h"
 
 #include <iostream>
+#include "../utils/parse.h"
+
+using namespace std;
 
 /*
 Define ops based on Aten/TVM's operator set: 
@@ -62,11 +65,17 @@ public:
     void appendNeighbor(FCOp* op);
     OperatorClass getOpClass() { return op_class_; }
 
-protected:
-    explicit FCOp(string name, string target, OperatorClass op_class) : FXNode(name, target), op_class_(op_class) {}
+    // abstract function: inferShape -> each operator must define its own shape result
+    virtual vector<int> inferShape(vector<vector<int>> arg_shapes) = 0;
 
-private:
+
+    
+    protected:
+    explicit FCOp(const FXNode& fx, OperatorClass op_class, string op_string) : FXNode(fx), op_class_(op_class), op_string(std::move(op_string)) {}
+    
+    private:
     const OperatorClass op_class_;
+    const string op_string;
     vector<FCOp*> neighbors = {};
     vector<string> tensor_deps = {}; // temporary string -> promote to TensorDep object
 };
@@ -74,8 +83,10 @@ private:
 
 class FCAddMMOp : public FCOp {
 public:
-    FCAddMMOp(const FXNode& fx) : FCOp(fx.name, fx.target, opCOF) {
-        this->name = "addmm";
+    FCAddMMOp(const FXNode& fx) : FCOp(fx, opCOF, "addmm") {}
+
+    vector<int> inferShape(vector<vector<int>> arg_shapes) override {
+        return {};
     }
 };
 
@@ -97,30 +108,55 @@ public:
 
 class FCPermuteOp : public FCOp {
 public:
-    FCPermuteOp(const FXNode& fx) : FCOp(fx.name, fx.target, opInjective) {
-        this->name = "permute";
+    FCPermuteOp(const FXNode& fx) : FCOp(fx, opInjective, "permute") {}
+
+    vector<int> inferShape(vector<vector<int>> arg_shapes) override {
+
+        // cout << "permiute: " << this->args.size() << endl;
+        // for (auto& arg : this->args) {
+        //     cout << "permute: " <<  arg << endl;
+        //     if (arg[0] == '[') {
+        //         vector<int> parsedArg = parseVector(arg);
+        //         printVector(parsedArg);
+        //     }
+        // }
+
+        // for (auto& arg : arg_shapes) {
+
+        // }
+
+        return {};
     }
+
+
 };
 
 
 class FCSumOp : public FCOp {
 public:
-    FCSumOp(const FXNode& fx) : FCOp(fx.name, fx.target, opReduction) {
-        this->name = "sum";
+    FCSumOp(const FXNode& fx) : FCOp(fx, opReduction, "sum") {}
+
+    vector<int> inferShape(vector<vector<int>> arg_shapes) override {
+        return {};
     }
 };
 
 
 class FCReLUOp : public FCOp {
 public:
-    FCReLUOp(const FXNode& fx) : FCOp(fx.name, fx.target, opInjective) {
-        this->name = "relu";
+    FCReLUOp(const FXNode& fx) : FCOp(fx, opInjective, "relu") {}
+
+    vector<int> inferShape(vector<vector<int>> arg_shapes) override {
+        return {};
     }
+
 };
 
 class FCSumIntList : public FCOp {
 public:
-    FCSumIntList(const FXNode& fx) : FCOp(fx.name, fx.target, opReduction) {
-        this->name = "sumIntList";
+    FCSumIntList(const FXNode& fx) : FCOp(fx, opReduction, "sumIntList") {}
+
+    vector<int> inferShape(vector<vector<int>> arg_shapes) override {
+        return {};
     }
 };
