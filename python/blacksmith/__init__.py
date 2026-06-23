@@ -3,6 +3,7 @@ import blacksmith_
 import torch
 import torch.nn as nn
 from torch._decomp import get_decompositions
+# from torch._inductor.decomposition import decompositions as inductor_decomps
 
 from dataclasses import dataclass
 from typing import Any, Tuple, Union
@@ -25,17 +26,9 @@ def compile(model: nn.Module,
             tensor_input: Union[torch.Tensor, Tuple[Any,...]]
 ) -> int:
 
-    decomps = get_decompositions([
-        torch.ops.aten.addmm.default,
-        torch.ops.aten.linear.default,
-    ])
-
-    print("Number of decompositions registered:", len(decomps))
-    print("Keys in decomp table:")
-    for key in decomps.keys():
-        print(" ", key)
 
     exported = torch.export.export(model, (tensor_input, ))
+
     fx_out = exported.run_decompositions().graph # decomps
     print(fx_out)
 

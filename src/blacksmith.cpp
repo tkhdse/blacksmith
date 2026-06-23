@@ -35,7 +35,7 @@ int lower_fx(const py::list& fx_graph) {
     // each node starts in its own FusionGroup for now
     FusionGraph* fusionGraph = buildFCGraph(fx_nodes);
     if (!fusionGraph) {
-        throw runtime_error("Encountered unsupported operator in FusionGraph construction");
+        throw runtime_error("encountered unsupported operator in FusionGraph construction");
     }
 
     // apply Fusion passes

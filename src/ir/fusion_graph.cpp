@@ -70,10 +70,12 @@ FCOp* allocateFCNodeFromTarget(FXNode& fx) {
     AtenTarget target = parseTarget(fx.target);
 
     switch (target) {
-    case AtenTarget::Add:
-        return new FCAddOp(fx);
-    case AtenTarget::MatMul:
-        return new FCMatMulOp(fx);
+    // case AtenTarget::Add:
+    //     return new FCAddOp(fx);
+    // case AtenTarget::MatMul:
+    //     return new FCMatMulOp(fx);
+    case AtenTarget::AddMM:
+        return new FCAddMMOp(fx);
     case AtenTarget::Permute:
         return new FCPermuteOp(fx);
     case AtenTarget::ReLU:

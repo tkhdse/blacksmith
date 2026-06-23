@@ -72,21 +72,27 @@ private:
 };
 
 
-class FCAddOp : public FCOp {
+class FCAddMMOp : public FCOp {
 public:
-    FCAddOp(const FXNode& fx) : FCOp(fx.name, fx.target, opInjective) {
-        this->name = "add";
+    FCAddMMOp(const FXNode& fx) : FCOp(fx.name, fx.target, opCOF) {
+        this->name = "addmm";
     }
 };
 
+// class FCAddOp : public FCOp {
+// public:
+//     FCAddOp(const FXNode& fx) : FCOp(fx.name, fx.target, opInjective) {
+//         this->name = "add";
+//     }
+// };
 
-// linalg matrix multiply
-class FCMatMulOp: public FCOp {
-public:
-    FCMatMulOp(const FXNode& fx) : FCOp(fx.name, fx.target, opCOF) {
-        this->name = "matmul";
-    }
-};
+// // linalg matrix multiply
+// class FCMatMulOp: public FCOp {
+// public:
+//     FCMatMulOp(const FXNode& fx) : FCOp(fx.name, fx.target, opCOF) {
+//         this->name = "matmul";
+//     }
+// };
 
 
 class FCPermuteOp : public FCOp {

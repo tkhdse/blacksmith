@@ -5,30 +5,35 @@ void Fuser::runSegmentationPass() {
     FuseGroup* cur = this->graph->getEntrypoint();
     
     while (cur) {
-        FuseGroup* next = cur->getNeighbors()[0]; // make this more scalable later -> bad code
-        vector<FCOp*> cur_ops = cur->getOperators();
+        vector<FuseGroup*> neighbors = cur->getNeighbors();
+
+        if (neighbors.size() == 0) {
+            cur = nullptr;
+            break;
+        } 
+
+        FuseGroup* next = neighbors[0]; // make this more scalable later -> bad code
+
+        // vector<FCOp*> cur_ops = cur->getOperators();
         vector<FCOp*> next_ops = next->getOperators();
 
-        if (next_ops.size() > 0) {
-            FCOp* op = next_ops[0];
-            if (cur->checkLegalFuse(op)) {
-                cur->lowerGroup(next->getOperatorClass());
 
-                // merge cur and next   
-                int nextId = cur->mergeGroups(next);
 
-                // obtain reference to fuse_groups
-                unordered_map<string, FuseGroup*>& fuse_groups = this->graph->getFuseGroups();
-                
-                string evictKey = "group_" + to_string(nextId);
-                fuse_groups.erase(evictKey);
-            }
-        }
-        
-        vector<FuseGroup*> neighborGroups = cur->getNeighbors();
+        FCOp* op = next_ops[0];
 
-        if (neighborGroups.size() == 0) {
-            cur = nullptr;
+        if (cur->checkLegalFuse(op)) {
+            cur->lowerGroup(next->getOperatorClass());
+
+            // merge cur and next   
+            int nextId = cur->mergeGroups(next);
+
+            // obtain reference to fuse_groups
+            unordered_map<string, FuseGroup*>& fuse_groups = this->graph->getFuseGroups();
+            
+            string evictKey = "group_" + to_string(nextId);
+            fuse_groups.erase(evictKey);
+        } else {
+            cur = neighbors.size() > 0 ? neighbors[0] : nullptr;
         }
     }
 }

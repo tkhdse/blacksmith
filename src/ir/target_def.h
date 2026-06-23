@@ -6,8 +6,9 @@ using namespace std;
 // register operators in this enum
 enum class AtenTarget {
     None = 0,
-    Add,
-    MatMul,
+    // Add,
+    // MatMul,
+    AddMM,
     Permute,
     ReLU,
     SumIntList
