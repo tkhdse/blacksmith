@@ -64,11 +64,6 @@ public:
     vector<FCOp*> getNeighbors();
     void appendNeighbor(FCOp* op);
     OperatorClass getOpClass() { return op_class_; }
-
-    // abstract function: inferShape -> each operator must define its own shape result
-    virtual vector<int> inferShape(vector<vector<int>> arg_shapes) = 0;
-
-
     
     protected:
     explicit FCOp(const FXNode& fx, OperatorClass op_class, string op_string) : FXNode(fx), op_class_(op_class), op_string(std::move(op_string)) {}
@@ -76,7 +71,10 @@ public:
     private:
     const OperatorClass op_class_;
     const string op_string;
-    vector<FCOp*> neighbors = {};
+
+    // vector<variant<TensorNode*, FCOp*>> dependencies; 
+
+    vector<FCOp*> neighbors = {}; 
     vector<string> tensor_deps = {}; // temporary string -> promote to TensorDep object
 };
 
@@ -84,10 +82,6 @@ public:
 class FCAddMMOp : public FCOp {
 public:
     FCAddMMOp(const FXNode& fx) : FCOp(fx, opCOF, "addmm") {}
-
-    vector<int> inferShape(vector<vector<int>> arg_shapes) override {
-        return {};
-    }
 };
 
 // class FCAddOp : public FCOp {
@@ -109,54 +103,21 @@ public:
 class FCPermuteOp : public FCOp {
 public:
     FCPermuteOp(const FXNode& fx) : FCOp(fx, opInjective, "permute") {}
-
-    vector<int> inferShape(vector<vector<int>> arg_shapes) override {
-
-        // cout << "permiute: " << this->args.size() << endl;
-        // for (auto& arg : this->args) {
-        //     cout << "permute: " <<  arg << endl;
-        //     if (arg[0] == '[') {
-        //         vector<int> parsedArg = parseVector(arg);
-        //         printVector(parsedArg);
-        //     }
-        // }
-
-        // for (auto& arg : arg_shapes) {
-
-        // }
-
-        return {};
-    }
-
-
 };
 
 
 class FCSumOp : public FCOp {
 public:
     FCSumOp(const FXNode& fx) : FCOp(fx, opReduction, "sum") {}
-
-    vector<int> inferShape(vector<vector<int>> arg_shapes) override {
-        return {};
-    }
 };
 
 
 class FCReLUOp : public FCOp {
 public:
     FCReLUOp(const FXNode& fx) : FCOp(fx, opInjective, "relu") {}
-
-    vector<int> inferShape(vector<vector<int>> arg_shapes) override {
-        return {};
-    }
-
 };
 
 class FCSumIntList : public FCOp {
 public:
     FCSumIntList(const FXNode& fx) : FCOp(fx, opReduction, "sumIntList") {}
-
-    vector<int> inferShape(vector<vector<int>> arg_shapes) override {
-        return {};
-    }
 };

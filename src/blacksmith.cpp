@@ -49,6 +49,7 @@ int lower_fx(const py::list& fx_graph) {
 
     // writes temporary "Hello, world!" file for now...
     writeToFile();
+    writeMTLFile();
 
     delete fusionGraph;
     return 0;

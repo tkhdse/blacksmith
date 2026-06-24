@@ -28,11 +28,6 @@ FusionGraph* buildFCGraph(vector<FXNode> fx_nodes) {
                 delete graph;
                 return nullptr;
             }
-
-
-            // by this point, op's dependencies should be available to us -> perform shape inference
-            op->inferShape({});
-
             
             FuseGroup* tmp = graph->createNewFuseGroup();
             if (fg) {

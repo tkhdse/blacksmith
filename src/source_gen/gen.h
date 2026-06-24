@@ -5,3 +5,5 @@ using namespace std;
 
 string emitCode();
 void writeToFile();
+
+void writeMTLFile();
