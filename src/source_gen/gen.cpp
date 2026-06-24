@@ -10,7 +10,7 @@ string emitCode() {
 
 string emitKernelCode(string kernelName) {
     const string header = "kernel void " + kernelName + "(device const float* A, device const float* B, device float* C, uint index [[thread_position_in_grid]])";
-    const string body = "\n\toutput[index] = A[index] + B[index];\n";
+    const string body = "\n\tC[index] = A[index] + B[index];\n";
     return header + "{" + body + "}";
 }
 
