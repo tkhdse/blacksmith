@@ -25,7 +25,7 @@ SRCS        := $(shell find $(SRC_DIR) -name '*.cpp' -o -name '*.cc')
 OBJS        := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,\
                $(patsubst $(SRC_DIR)/%.cc,$(BUILD_DIR)/%.o,$(SRCS)))
 
-CXXFLAGS	:= -O3 -Wall -std=c++11 -fPIC 
+CXXFLAGS	:= -O3 -Wall -std=c++17 -fPIC 
 LDFLAGS		:= -shared -undefined dynamic_lookup
 
 DEPS        := $(OBJS:.o=.d)

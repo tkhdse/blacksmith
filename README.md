@@ -7,18 +7,26 @@ Blacksmith's design stems from thorough research between 3 prominent players in 
 
 
 ## Setup
-Compile JIT compiler code for IR generation and transformation passes. 
+### Pull submodules (metal-cpp)
 ```
+git submodule update --init --recursive
+```
+
+### [Optional: create and activate virtual environment]
+```
+. venv/bin/activate
+pip install -r python/requirements.txt
+```
+
+### Build the extension
+```
+mkdir -p build
+cd build
+cmake ..
 make
 ```
 
-[Optional: create and activate virtual environment]
-```
-pip install -r requirements.txt
-. venv/bin/activate
-```
-
-Execute script containing `blacksmith.compile(MODEL)`:
+### Execute script containing `blacksmith.compile(MODEL)`:
 ```
 python3 python/main.py
 ```  
