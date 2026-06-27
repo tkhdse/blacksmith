@@ -1,9 +1,13 @@
-#define NS_PRIVATE_IMPLEMENTATION
-#define MTL_PRIVATE_IMPLEMENTATION
-#define CA_PRIVATE_IMPLEMENTATION
+// #define NS_PRIVATE_IMPLEMENTATION
+// #define MTL_PRIVATE_IMPLEMENTATION
+// #define CA_PRIVATE_IMPLEMENTATION
 
 #include <Metal/Metal.hpp>
 #include <Foundation/Foundation.hpp>
 #include <QuartzCore/QuartzCore.hpp>
 
+#include <iostream>
 
+int main() {
+    std::cout << "invoke.cpp" << std::endl;
+}

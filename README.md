@@ -20,8 +20,7 @@ pip install -r python/requirements.txt
 
 ### Build the extension
 ```
-mkdir -p build
-cd build
+mkdir build && cd build
 cmake ..
 make
 ```
