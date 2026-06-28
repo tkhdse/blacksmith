@@ -44,9 +44,7 @@ LDFLAGS		:= -shared -undefined dynamic_lookup
 
 DEPS        := $(OBJS:.o=.d)
 
-.PHONY: all clean
-
-.PHONY: kernel_test
+.PHONY: all clean kernel_test
 
 kernel_test: $(KERNEL_BIN)
 	@echo "kernel_test built successfully"
@@ -62,6 +60,7 @@ $(KERNEL_OBJ): $(KERNEL_SRC) | $(BUILD_DIR)
 
 
 all: $(TARGET)
+	@echo "Blacksmith built successfully"
 
 $(TARGET): $(OBJS) | $(OUT_DIR)
 	$(CXX) $(LDFLAGS) $(OBJS) -o $(TARGET)
