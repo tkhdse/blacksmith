@@ -26,36 +26,36 @@ OBJS        := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,\
                $(patsubst $(SRC_DIR)/%.cc,$(BUILD_DIR)/%.o,$(SRCS)))
 
 
-METAL_CPP_DIR 	:= metal-cpp
-KERNEL_SRC 		:= $(SRC_DIR)/metal/kernels/invoke.cpp
-KERNEL_OBJ 		:= $(BUILD_DIR)/metal/kernels/kernel_test_invoke.o
-KERNEL_BIN 		:= $(BUILD_DIR)/kernel_test
+# METAL_CPP_DIR 	:= metal-cpp
+# KERNEL_SRC 		:= $(SRC_DIR)/metal/kernels/invoke.cpp
+# KERNEL_OBJ 		:= $(BUILD_DIR)/metal/kernels/kernel_test_invoke.o
+# KERNEL_BIN 		:= $(BUILD_DIR)/kernel_test
 
-METAL_CXXFLAGS := -O3 -Wall -std=c++17 \
-	-I$(METAL_CPP_DIR) \
-	-DNS_PRIVATE_IMPLEMENTATION \
-	-DMTL_PRIVATE_IMPLEMENTATION \
-	-DCA_PRIVATE_IMPLEMENTATION
+# METAL_CXXFLAGS := -O3 -Wall -std=c++17 \
+# 	-I$(METAL_CPP_DIR) \
+# 	-DNS_PRIVATE_IMPLEMENTATION \
+# 	-DMTL_PRIVATE_IMPLEMENTATION \
+# 	-DCA_PRIVATE_IMPLEMENTATION
 
-METAL_LDFLAGS 	:= -framework Metal -framework Foundation -framework QuartzCore
+# METAL_LDFLAGS 	:= -framework Metal -framework Foundation -framework QuartzCore
 
 CXXFLAGS	:= -O3 -Wall -std=c++17 -fPIC 
 LDFLAGS		:= -shared -undefined dynamic_lookup
 
 DEPS        := $(OBJS:.o=.d)
 
-.PHONY: all clean kernel_test
+.PHONY: all clean # kernel_test
 
-kernel_test: $(KERNEL_BIN)
-	@echo "kernel_test built successfully"
+# kernel_test: $(KERNEL_BIN)
+# 	@echo "kernel_test built successfully"
 
-$(KERNEL_BIN): $(KERNEL_SRC) | $(BUILD_DIR)
-	@mkdir -p $(dir $@)
-	$(CXX) $(KERNEL_OBJ) $(METAL_LDFLAGS) -o $@
+# $(KERNEL_BIN): $(KERNEL_SRC) | $(BUILD_DIR)
+# 	@mkdir -p $(dir $@)
+# 	$(CXX) $(KERNEL_OBJ) $(METAL_LDFLAGS) -o $@
 
-$(KERNEL_OBJ): $(KERNEL_SRC) | $(BUILD_DIR)
-	@mkdir -p $(dir $@)
-	$(CXX) $(METAL_CXXFLAGS) -c $< -o $@
+# $(KERNEL_OBJ): $(KERNEL_SRC) | $(BUILD_DIR)
+# 	@mkdir -p $(dir $@)
+# 	$(CXX) $(METAL_CXXFLAGS) -c $< -o $@
 
 
 
