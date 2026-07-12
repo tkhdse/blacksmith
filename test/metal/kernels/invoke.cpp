@@ -9,5 +9,11 @@
 #include <iostream>
 
 int main() {
-    std::cout << "invoke.cpp" << std::endl;
+    MTL::Device* device = MTL::CreateSystemDefaultDevice();
+    MTL::Library* lib;
+    MTL::Function* func;
+
+
+    std::cout << "invoked test metal pipeline" << std::endl;
+
 }

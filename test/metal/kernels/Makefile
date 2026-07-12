@@ -23,7 +23,7 @@ DEPS        := $(OBJS:.o=.d)
 all: $(KERNEL_BIN)
 	@echo "kernel_test built successfully"
 
-$(KERNEL_BIN): $(KERNEL_SRC) | $(BUILD_DIR)
+$(KERNEL_BIN): $(KERNEL_OBJ) | $(BUILD_DIR)
 	@mkdir -p $(dir $@)
 	$(CXX) $(KERNEL_OBJ) $(METAL_LDFLAGS) -o $@
 

@@ -30,6 +30,13 @@ make
 python3 python/main.py
 ```  
 
+### [Optional: compile and run test files]
+```
+cd test/metal/kernels
+make
+./build/kernel_test_invoke.o
+```
+
 
 ## Implementation
 Blacksmith leverages PyTorch's TorchDynamo to generate an FX Graph (compute graph) for a given model definition. Blacksmith lowers this high-level compute graph to it's own IR containing a `FusionGraph` and `FCNOps` ("Fusion-candidate" ops). 
