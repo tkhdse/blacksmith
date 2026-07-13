@@ -7,6 +7,7 @@
 #include <QuartzCore/QuartzCore.hpp>
 
 #include <iostream>
+#include <time.h>
 
 
 const int num_peek = 5;
@@ -15,7 +16,6 @@ const int arrsize = 1024;
 const int buffsize = arrsize * sizeof(int);
 
 int main(int argc, char* argv[]) {
-
     if (argc > 2) {
         std::cerr << "expected 2 or fewer arguments" << std::endl;
         return 1;
@@ -27,6 +27,8 @@ int main(int argc, char* argv[]) {
     } else {
         kernel_name = "mm_";
     }
+
+    srand(time(NULL)); // random seed based on current time
 
     std::cout << "Executing kernel... " << kernel_name << std::endl;
 
