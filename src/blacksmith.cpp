@@ -48,8 +48,10 @@ int lower_fx(const py::list& fx_graph) {
     fuser->printFuseResults("Segmentation Pass");
 
     // writes temporary "Hello, world!" file for now...
-    writeToFile();
-    writeMTLFile();
+    // writeToFile();
+    // writeMTLFile();
+    KernelBuilder* builder = new KernelBuilder();
+    builder->writeMTLFile();
 
     delete fusionGraph;
     return 0;

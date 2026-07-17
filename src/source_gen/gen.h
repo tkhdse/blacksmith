@@ -3,7 +3,16 @@
 
 using namespace std;
 
-string emitCode();
-void writeToFile();
+class KernelBuilder {
+public:
+    string emitKernelCode(string kernelName);
+    void writeMTLFile();    
 
-void writeMTLFile();
+private:
+    string source;
+};
+
+// string emitCode();
+// void writeToFile();
+
+// void writeMTLFile();
