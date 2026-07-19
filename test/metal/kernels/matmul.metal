@@ -1,6 +1,6 @@
 static int TILE_WIDTH = 16;
 
-kernel void mm_(device const float* A, device const float* B, device float* C, uint A_Y, uint A_X, uint B_Y, uint index [[thread_position_in_grid]]) {
+kernel void mm_(device const float* A, device const float* B, device float* C, uint A_Y, uint A_X, uint B_Y, uint tidx [[thread_position_in_grid]], uint tgidx [[threadgroup_position_in_grid]], uint t_pos_in_tg [[thread_position_in_threadgroup]]) {
     
     // define tiles in shared memory
     threadgroup float tileA[TILE_WIDTH][TILE_WIDTH];
@@ -9,6 +9,8 @@ kernel void mm_(device const float* A, device const float* B, device float* C, u
     // how does index map to a 2d space? 
     uint ty = index % TILE_WIDTH;
     uint tx = index / TILE_WIDTH;
+
+    uint y = TILE*WIDTH
 
     // populate tileA, tileB
     // iterates over tiles
